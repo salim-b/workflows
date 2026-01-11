@@ -27,6 +27,13 @@ jobs:
         if: env.is_second_sunday == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v4
 
+      - name: Install xee
+        if: env.is_second_sunday == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          curl -L https://github.com/Paligo/xee/releases/latest/download/xee-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          sudo mv xee /usr/local/bin/
+          xee --version
+
       - name: Set up Pandoc
         if: env.is_second_sunday == 'true' || github.event_name == 'workflow_dispatch'
         uses: pandoc/actions/setup@v1.1.1
