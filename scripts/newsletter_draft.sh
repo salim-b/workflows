@@ -76,7 +76,7 @@ BODY_HTML=$(echo "$CONTENT" | pandoc -f markdown -t html --wrap=none)
 echo "Creating Confluence page: $TITLE"
 
 # Call Confluence API
-CREATE_PAGE_RESPONSE=$(curl -s -X POST "https://${CONFLUENCE_HOST}/rest/api/content" \
+CREATE_PAGE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST%/}/rest/api/content" \
   -H "Authorization: Bearer $CONFLUENCE_PAT" \
   -H "Content-Type: application/json" \
   -d '{
