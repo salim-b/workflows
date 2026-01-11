@@ -21,9 +21,9 @@ ARTICLE_LINKS="$(
     found=0
     while [ $found -eq 0 ]; do
       content=$(curl -s -L -A "Mozilla/5.0" "https://www.digitale-gesellschaft.ch/feed/?paged=$page")
-      if ! echo "$content" | grep -qF "<item>"; then break; fi
+      if [[ "$content" != *"<item>"* ]]; then break; fi
       echo "$content" | sed -n '/<item>/,/<\/item>/p'
-      if echo "$content" | grep -qF "<category>Newsletter<category>"; then found=1; fi
+      if [[ "$content" =~ category.*Newsletter.*category ]]; then found=1; fi
       ((page++))
       if [ $page -gt 10 ]; then break; fi
     done
