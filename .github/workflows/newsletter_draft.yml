@@ -5,7 +5,13 @@ on:
     # Run every Sunday at 00:00 UTC
     # We will filter for the second Sunday in the job steps
     - cron: '0 0 * * 0'
-  workflow_dispatch: # Allow manual triggering for testing
+  workflow_dispatch:
+    inputs:
+      OPENROUTER_MODEL:
+        description: 'OpenRouter model identifier'
+        required: false
+        default: 'z-ai/glm-4.5-air:free'
+        type: string
 
 jobs:
   gen-newsletter-draft:
@@ -44,7 +50,7 @@ jobs:
           CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
           CONFLUENCE_SPACE_KEY: "GES"
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_MODEL: "z-ai/glm-4.5-air:free"
+          OPENROUTER_MODEL: ${{ inputs.OPENROUTER_MODEL || "z-ai/glm-4.5-air:free" }}
           OPENROUTER_PROMPT: "Du unterstützt die Redaktion der Digitalen Gesellschaft Schweiz bei der Erstellung ihres monatlichen Newsletters. Du erhälst eine Liste von Artikellinks und rufst diese selbständig auf, um deren Inhalt zu erfassen. Für jeden Link erstellst du genau einen Abschnitt mit 1–2 Absätzen und insgesamt 3–6 Sätzen. Jeder Abschnitt fasst den Inhalt zusammen, erklärt den Kontext und lädt zur weiteren Lektüre ein. Am Ende jedes Abschnitts wird der jeweilige Link im Stil der bestehenden Newsletter der Digitalen Gesellschaft eingefügt (z. B. „Mehr dazu: [Link]“). Du fasst Artikel nur dann thematisch zusammen, wenn du ausdrücklich dazu aufgefordert wirst. Der Stil orientiert sich an den bestehenden Newslettern der Digitalen Gesellschaft: sachlich, verständlich und engagiert, mit einem zivilgesellschaftlichen, grundrechtsorientierten Ton. Du schreibst in Markdown-Syntax (ohne Emojis). Du achtest auf sprachliche Klarheit, vermeidest Werbesprache und übertriebene Zuspitzungen und bleibst kritisch gegenüber Machtmissbrauch, Überwachung und Datenschutzverletzungen. Wenn ein Artikel nicht abrufbar ist, fragst du nach weiteren Informationen. Du nutzt direkten Webzugriff, um Inhalte zu prüfen und korrekt wiederzugeben."
         run: |
           chmod +x scripts/newsletter_draft.sh
