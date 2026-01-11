@@ -11,9 +11,6 @@ jobs:
   ai-report:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Check if second Sunday
         id: check_date
         run: |
@@ -22,10 +19,19 @@ jobs:
             echo "is_second_sunday=true" >> $GITHUB_ENV
           else
             echo "is_second_sunday=false" >> $GITHUB_ENV
-            echo "Today is day $DAY, not the second Sunday (days 8-14)."
+            echo "Today is day $DAY, not the second Sunday (days 8-14). Skipping workflow."
+            exit 0
           fi
 
-      - name: Run AI to Confluence script
+      - name: Checkout repository
+        if: env.is_second_sunday == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/checkout@v4
+
+      - name: Set up Pandoc
+        if: env.is_second_sunday == 'true' || github.event_name == 'workflow_dispatch'
+        uses: pandoc/actions/setup@v1.1.1
+
+      - name: Generate newsletter draft and write it to Confluence
         if: env.is_second_sunday == 'true' || github.event_name == 'workflow_dispatch'
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
