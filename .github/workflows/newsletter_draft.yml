@@ -36,5 +36,5 @@ jobs:
           AI_MODEL: "google/gemini-2.0-flash-exp:free"
           AI_PROMPT: "Provide a monthly summary of technology trends for our internal wiki."
         run: |
-          chmod +x scripts/ai_to_confluence.sh
-          ./scripts/ai_to_confluence.sh
+          chmod +x scripts/newsletter_draft.sh
+          ./scripts/newsletter_draft.sh
