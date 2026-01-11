@@ -47,22 +47,25 @@ OPENROUTER_PROMPT+=$'\n\n# Artikellinks\n\n'"$ARTICLE_LINKS"$'\n\n# Letzte 10 Ne
 
 echo "Fetching response from OpenRouter..."
 
-RESPONSE=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
+OPENROUTER_PAYLOAD=$(jq -n \
+  --arg model "$OPENROUTER_MODEL" \
+  --arg prompt "$OPENROUTER_PROMPT" \
+  '{
+     model: $model,
+     messages: [{role: "user", content: $prompt}]
+   }')
+
+OPENROUTER_RESPONSE=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{
-    "model": "'"$OPENROUTER_MODEL"'",
-    "messages": [
-      {"role": "user", "content": "'"$OPENROUTER_PROMPT"'"}
-    ]
-  }')
+  -d "$OPENROUTER_PAYLOAD")
 
 # Extract content using jq
-CONTENT=$(echo "$RESPONSE" | jq -r '.choices[0].message.content')
+CONTENT=$(echo "$OPENROUTER_RESPONSE" | jq -r '.choices[0].message.content')
 
 if [ -z "$CONTENT" ] || [ "$CONTENT" == "null" ]; then
   echo "Error: Failed to get content from OpenRouter"
-  echo "Response: $RESPONSE"
+  echo "Response: $OPENROUTER_RESPONSE"
   exit 1
 fi
 
@@ -71,41 +74,41 @@ echo "Successfully received content from OpenRouter."
 # Prepare Confluence page
 DATE=$(date +"%Y-%m-%d")
 TITLE="«Update» $DATE"
-BODY_HTML=$(echo "$CONTENT" | pandoc -f markdown -t html --wrap=none)
+BODY_HTML=$(echo "$CONTENT" | pandoc --from=markdown --to=html --wrap=none)
 
 echo "Creating Confluence page: $TITLE"
 
 # Call Confluence API
-PAYLOAD=$(jq -n \
+CONFLUENCE_PAYLOAD=$(jq -n \
   --arg title "$TITLE" \
   --arg desc "Newsletter-Entwurf generiert durch OpenRouter-Modell \`${OPENROUTER_MODEL}\`." \
   --arg id "$CONFLUENCE_ANCESTOR_ID" \
   --arg val "$BODY_HTML" \
   '{
-    type: "page",
-    title: $title,
-    description: $desc,
-    space: {
-      key: "GES"
-    },
-    ancestors: [{id: $id}],
-    body: {
-      storage: {
-        value: $val,
-        representation: "storage"
-      }
-    }
-  }')
-CREATE_PAGE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST%/}/rest/api/content" \
+     type: "page",
+     title: $title,
+     description: $desc,
+     space: {
+       key: "GES"
+     },
+     ancestors: [{id: $id}],
+     body: {
+       storage: {
+         value: $val,
+         representation: "storage"
+       }
+     }
+   }')
+CONFLUENCE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST%/}/rest/api/content" \
   -H "Authorization: Bearer $CONFLUENCE_PAT" \
   -H "Content-Type: application/json; charset='UTF-8'" \
-  -d "$PAYLOAD")
+  -d "$CONFLUENCE_PAYLOAD")
 
-PAGE_LINK=$(echo "$CREATE_PAGE_RESPONSE" | jq -r '._links.base + ._links.webui')
+PAGE_LINK=$(echo "$CONFLUENCE_RESPONSE" | jq -r '._links.base + ._links.webui')
 
 if [[ "$PAGE_LINK" == *"null"* ]]; then
   echo "Error: Failed to create Confluence page"
-  echo "Response: $CREATE_PAGE_RESPONSE"
+  echo "Response: $CONFLUENCE_RESPONSE"
   exit 1
 fi
 
