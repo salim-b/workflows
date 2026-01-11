@@ -41,19 +41,15 @@ fi
 
 echo "Successfully received content from AI."
 
-# Prepare Confluence Page
+# Prepare Confluence page
 DATE=$(date +"%Y-%m-%d")
 TITLE="«Update» $DATE"
-
-# Convert markdown to HTML for Confluence using Pandoc
 BODY_HTML=$(echo "$CONTENT" | pandoc -f markdown -t html --wrap=none)
 
 echo "Creating Confluence page: $TITLE"
 
-# Call Confluence API
-# Note: Using Basic Auth with Email:API_TOKEN
+# Call Confluence API (using Basic Auth)
 AUTH=$(echo -n "$CONFLUENCE_EMAIL:$CONFLUENCE_API_TOKEN" | base64)
-
 CREATE_PAGE_RESPONSE=$(curl -s -X POST "https://${CONFLUENCE_DOMAIN}/rest/api/content" \
   -H "Authorization: Basic $AUTH" \
   -H "Content-Type: application/json" \
