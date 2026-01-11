@@ -76,20 +76,30 @@ BODY_HTML=$(echo "$CONTENT" | pandoc -f markdown -t html --wrap=none)
 echo "Creating Confluence page: $TITLE"
 
 # Call Confluence API
-CREATE_PAGE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST%/}/rest/api/content" \
-  -H "Authorization: Bearer $CONFLUENCE_PAT" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "type": "page",
-    "title": '"$TITLE"',
-    "ancestors": [{"id": "'"$CONFLUENCE_ANCESTOR_ID"'"}],
-    "body": {
-      "storage": {
-        "value": '"$BODY_HTML"',
-        "representation": "storage"
+PAYLOAD=$(jq -n \
+  --arg title "$TITLE" \
+  --arg desc "Newsletter-Entwurf generiert durch OpenRouter-Modell \`${OPENROUTER_MODEL}\`." \
+  --arg id "$CONFLUENCE_ANCESTOR_ID" \
+  --arg val "$BODY_HTML" \
+  '{
+    type: "page",
+    title: $title,
+    description: $desc,
+    space: {
+      key: "GES"
+    },
+    ancestors: [{id: $id}],
+    body: {
+      storage: {
+        value: $val,
+        representation: "storage"
       }
     }
   }')
+CREATE_PAGE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST%/}/rest/api/content" \
+  -H "Authorization: Bearer $CONFLUENCE_PAT" \
+  -H "Content-Type: application/json; charset='UTF-8'" \
+  -d "$PAYLOAD")
 
 PAGE_LINK=$(echo "$CREATE_PAGE_RESPONSE" | jq -r '._links.base + ._links.webui')
 
