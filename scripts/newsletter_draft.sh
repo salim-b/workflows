@@ -77,7 +77,7 @@ DATE=$(date +"%Y-%m-%d")
 TITLE="«Update» $DATE"
 BODY_HTML=$(echo "$CONTENT" | pandoc --from=markdown --to=html --wrap=none)
 
-echo "Creating Confluence page: $TITLE"
+echo "Creating new Confluence wiki page: $TITLE"
 
 # Call Confluence API
 CONFLUENCE_PAYLOAD=$(jq -n \
@@ -99,17 +99,18 @@ CONFLUENCE_PAYLOAD=$(jq -n \
        }
      }
    }')
-CONFLUENCE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST%/}/rest/api/content" \
+CONFLUENCE_HOST="${CONFLUENCE_HOST%/}"
+CONFLUENCE_RESPONSE=$(curl -s -X POST "${CONFLUENCE_HOST}/rest/api/content" \
   -H "Authorization: Bearer $CONFLUENCE_PAT" \
-  -H "Content-Type: application/json; charset='UTF-8'" \
+  -H "Content-Type: application/json" \
   -d "$CONFLUENCE_PAYLOAD")
 
-PAGE_LINK=$(echo "$CONFLUENCE_RESPONSE" | jq -r '._links.base + ._links.webui')
+CONFLUENCE_PAGE_LINK=$(echo "$CONFLUENCE_RESPONSE" | jq -r '._links.base + ._links.webui')
 
-if [[ "$PAGE_LINK" == *"null"* ]]; then
+if [[ "$CONFLUENCE_PAGE_LINK" == *"null"* ]]; then
   echo "Error: Failed to create Confluence page"
   echo "Response: $CONFLUENCE_RESPONSE"
   exit 1
 fi
 
-echo "Confluence page created successfully: $PAGE_LINK"
+echo "Confluence wiki page created successfully: $CONFLUENCE_PAGE_LINK"
