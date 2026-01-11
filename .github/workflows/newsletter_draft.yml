@@ -22,28 +22,28 @@ jobs:
         run: |
           DAY=$(date +%d)
           if [[ $DAY -ge 8 && $DAY -le 14 ]]; then
-            echo "is_that_time=true" >> $GITHUB_ENV
+            echo "is_that_day=true" >> $GITHUB_ENV
           else
-            echo "is_that_time=false" >> $GITHUB_ENV
+            echo "is_that_day=false" >> $GITHUB_ENV
             echo "Today is day $DAY, not the second Wednesday (days 8-14). Skipping workflow."
             exit 0
           fi
 
       - name: Checkout repository
-        if: env.is_that_time == 'true' || github.event_name == 'workflow_dispatch'
+        if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         uses: actions/checkout@v4
 
       - name: Install xee
-        if: env.is_that_time == 'true' || github.event_name == 'workflow_dispatch'
+        if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           cargo install xee
 
       - name: Set up Pandoc
-        if: env.is_that_time == 'true' || github.event_name == 'workflow_dispatch'
+        if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         uses: pandoc/actions/setup@v1.1.1
 
       - name: Generate newsletter draft and write it to Confluence
-        if: env.is_that_time == 'true' || github.event_name == 'workflow_dispatch'
+        if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         env:
           CONFLUENCE_ANCESTOR_ID: "5570588"
           CONFLUENCE_HOST: "https://wiki.digitale-gesellschaft.ch"
