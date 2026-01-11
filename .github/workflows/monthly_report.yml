@@ -33,6 +33,7 @@ jobs:
           CONFLUENCE_EMAIL: ${{ secrets.CONFLUENCE_EMAIL }}
           CONFLUENCE_API_TOKEN: ${{ secrets.CONFLUENCE_API_TOKEN }}
           CONFLUENCE_SPACE_KEY: ${{ secrets.CONFLUENCE_SPACE_KEY }}
+          AI_MODEL: "google/gemini-2.0-flash-exp:free"
           AI_PROMPT: "Provide a monthly summary of technology trends for our internal wiki."
         run: |
           chmod +x scripts/ai_to_confluence.sh

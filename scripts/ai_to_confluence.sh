@@ -14,7 +14,7 @@
 
 set -euo pipefail
 
-AI_MODEL="${AI_MODEL:-"google/gemini-2.0-flash-001"}"
+AI_MODEL="${AI_MODEL:-"google/gemini-2.0-flash-exp:free"}"
 AI_PROMPT="${AI_PROMPT:-"Provide a brief summary of the importance of documentation in software development."}"
 
 echo "Fetching response from OpenRouter..."
