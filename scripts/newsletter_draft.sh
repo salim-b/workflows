@@ -16,18 +16,6 @@
 
 set -euo pipefail
 
-# Load static defaults from config.env (if it exists)
-# WARNING: Multiline values (with quoted newlines) are not supported
-CONFIG_PATH="$(dirname "$0")/../config.env"
-if [ -f "$CONFIG_PATH" ]; then
-  while read -r line || [ -n "$line" ]; do
-    if [[ "$line" =~ ^([a-zA-Z_][a-zA-Z0-9_]*)= ]]; then
-      key="${BASH_REMATCH[1]}"      
-      [ -z "${!key+x}" ] && eval "$line"
-    fi
-  done < "$CONFIG_PATH"
-fi
-
 # Get relevant Blog post links and append them to `OPENROUTER_PROMPT`
 ARTICLE_LINKS="${ARTICLE_LINKS:-$(
   (
