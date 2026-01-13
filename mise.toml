@@ -1,7 +1,7 @@
 [[env._.file]]
-path = "config.env" 
+  path = "config.env" 
 
- [[env._.file]]
-# NOTE: sops doesn't yet support decrypting with PQ-safe age identities, cf. https://github.com/getsops/sops/issues/2039
-path = "secrets.env"
-redact = true
+[[env._.file]]
+  # NOTE: sops doesn't yet support decrypting with PQ-safe age identities, cf. https://github.com/getsops/sops/issues/2039
+  path = "secrets.env"
+  redact = true

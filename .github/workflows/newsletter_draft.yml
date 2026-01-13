@@ -41,6 +41,7 @@ jobs:
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           cargo install xee
+          xee --version
 
       - name: Set up Pandoc
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
