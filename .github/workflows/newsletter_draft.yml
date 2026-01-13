@@ -41,7 +41,6 @@ jobs:
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           cargo install xee
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
       - name: Set up Pandoc
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
@@ -52,7 +51,7 @@ jobs:
         env:
           CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_MODEL: ${{ inputs.OPENROUTER_MODEL }}
+          OPENROUTER_MODEL: ${{ inputs.OPENROUTER_MODEL || env.OPENROUTER_MODEL }}
         run: |
           chmod +x scripts/newsletter_draft.sh
           ./scripts/newsletter_draft.sh

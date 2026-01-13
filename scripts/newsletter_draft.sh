@@ -16,32 +16,6 @@
 
 set -euo pipefail
 
-# Load static defaults from config.env (if it exists)
-# WARNING: Multiline values (with quoted newlines) are not supported
-CONFIG_PATH="$(dirname "$0")/../config.env"
-if [ -f "$CONFIG_PATH" ]; then
-  while read -r line || [ -n "$line" ]; do
-    if [[ "$line" =~ ^([a-zA-Z_][a-zA-Z0-9_]*)= ]]; then
-      key="${BASH_REMATCH[1]}"      
-      [ -z "${!key+x}" ] && eval "$line"
-    fi
-  done < "$CONFIG_PATH"
-fi
-
-# Strip leading/trailing quotes from environment variables (e.g. if loaded via GITHUB_ENV)
-for var in CONFLUENCE_HOST CONFLUENCE_SPACE_KEY CONFLUENCE_ANCESTOR_ID OPENROUTER_MODEL OPENROUTER_PROMPT; do
-  if [ -n "${!var+x}" ]; then
-    val="${!var}"
-    val="${val%"}"
-    val="${val#"}"
-    export "$var=$val"
-  fi
-done
-
-# Set defaults if still empty
-OPENROUTER_MODEL="${OPENROUTER_MODEL:-"z-ai/glm-4.5-air:free"}"
-OPENROUTER_PROMPT="${OPENROUTER_PROMPT:-"Du unterstützt die Redaktion der Digitalen Gesellschaft Schweiz bei der Erstellung ihres monatlichen Newsletters."}"
-
 # Get relevant Blog post links and append them to `OPENROUTER_PROMPT`
 ARTICLE_LINKS="${ARTICLE_LINKS:-$(
   (
