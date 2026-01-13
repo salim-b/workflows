@@ -36,11 +36,11 @@ ARTICLE_LINKS="${ARTICLE_LINKS:-$(
     found=0
     while [ $found -eq 0 ]; do
       content=$(curl -s -L -A "Mozilla/5.0" "https://www.digitale-gesellschaft.ch/feed/?paged=$page")
-      if [[ "$content" != *"<item>"* ]]; then break; fi
+      [[ "$content" != *"<item>"* ]] && break
       echo "$content" | sed -n '/<item>/,/<\/item>/p'
-      if [[ "$content" =~ category.*Newsletter.*category ]]; then found=1; fi
+      [[ "$content" =~ category.*Newsletter.*category ]] && found=1
       ((page++))
-      if [ $page -gt 10 ]; then break; fi
+      [ $page -gt 10 ] && break
     done
     echo '</channel></rss>'
   ) | \
