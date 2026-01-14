@@ -47,7 +47,7 @@ jobs:
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         run: |
           cargo install xee
-          xee --version
+          xee --version >> $GITHUB_STEP_SUMMARY
 
       - name: Generate newsletter draft and write it to Confluence
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
@@ -57,4 +57,4 @@ jobs:
           OPENROUTER_MODEL: ${{ inputs.OPENROUTER_MODEL || env.OPENROUTER_MODEL }}
         run: |
           chmod +x scripts/newsletter_draft.sh
-          ./scripts/newsletter_draft.sh
+          ./scripts/newsletter_draft.sh >> $GITHUB_STEP_SUMMARY
