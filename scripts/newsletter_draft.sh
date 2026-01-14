@@ -36,12 +36,14 @@ ARTICLE_LINKS="${ARTICLE_LINKS:-$(
     xargs -d '"' echo | \
     xargs -n1
 )}"
+
 NEWSLETTER_LINKS="${NEWSLETTER_LINKS:-$(
   curl -s -L -A "Mozilla/5.0" https://www.digitale-gesellschaft.ch/feed/?tag=newsletter | \
     xee xpath "string-join(//item/link, ' ')" | \
     xargs -d '"' echo | \
     xargs -n1
 )}"
+
 OPENROUTER_PROMPT+=$'\n\n# Artikellinks\n\n'"$ARTICLE_LINKS"$'\n\n# Letzte 10 Newsletter\n\n'"$NEWSLETTER_LINKS"
 
 # Call OpenRouter API
@@ -117,6 +119,7 @@ CONFLUENCE_PAYLOAD=$(jq -n \
        }
      }
    }')
+
 CONFLUENCE_RESPONSE=$(curl -s -L -X POST "${CONFLUENCE_HOST}/rest/api/content" \
   -H "Authorization: Bearer $CONFLUENCE_PAT" \
   -H "Content-Type: application/json" \
