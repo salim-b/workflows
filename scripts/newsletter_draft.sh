@@ -89,7 +89,10 @@ BASE_TITLE="«Update» $DATE"
 TITLE="$BASE_TITLE"
 COUNTER=1
 
-CONFLUENCE_HOST="${CONFLUENCE_HOST%/}"
+## Add model ID to title if manually triggered run
+if [[ $GITHUB_EVENT_NAME == "workflow_dispatch" ]] ; then
+  TITLE+=" | $OPENROUTER_MODEL"
+fi
 
 ## Add model ID with serial nr to title if it already exists
 echo "Checking if page with title '$TITLE' already exists..."
