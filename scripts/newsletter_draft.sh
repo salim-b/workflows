@@ -46,7 +46,7 @@ NEWSLETTER_LINKS="${NEWSLETTER_LINKS:-$(
 
 OPENROUTER_PROMPT+=$'\n\n# Artikellinks\n\n'"$ARTICLE_LINKS"$'\n\n# Letzte 10 Newsletter\n\n'"$NEWSLETTER_LINKS"
 
-# Call OpenRouter API
+# Fetch result from OpenRouter
 echo "Fetching response from OpenRouter..."
 
 OPENROUTER_PAYLOAD=$(jq -n \
@@ -62,7 +62,6 @@ OPENROUTER_RESPONSE=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/complet
   -H "Content-Type: application/json" \
   -d "$OPENROUTER_PAYLOAD")
 
-# Extract content using jq
 CONTENT=$(echo "$OPENROUTER_RESPONSE" | jq -r '.choices[0].message.content')
 
 if [ -z "$CONTENT" ] || [ "$CONTENT" == "null" ]; then
@@ -73,10 +72,12 @@ fi
 
 echo "Successfully received content from OpenRouter."
 
-# Prepare Confluence page
+# Normalize Confluence host trailing slash
+CONFLUENCE_HOST="${CONFLUENCE_HOST%/}"
+
+# Prepare Confluence page title
 ## Calculate the 3rd Wednesday of the current month (always between the 15th and 21st)
 YEAR_MONTH=$(date +"%Y-%m")
-DATE=""
 for d in {15..21}; do
   if [ "$(date -d "$YEAR_MONTH-$d" +%u)" -eq 3 ]; then
     DATE="$YEAR_MONTH-$d"
@@ -90,11 +91,12 @@ COUNTER=1
 
 CONFLUENCE_HOST="${CONFLUENCE_HOST%/}"
 
+## Add model ID with serial nr to title if it already exists
 echo "Checking if page with title '$TITLE' already exists..."
 while true; do
   CHECK_RESPONSE=$(curl -s -L -X GET "${CONFLUENCE_HOST}/rest/api/content?title=$(echo -n "$TITLE" | jq -sRr @uri)&spaceKey=$CONFLUENCE_SPACE_KEY" \
     -H "Authorization: Bearer $CONFLUENCE_PAT")
-  
+
   if [[ $(echo "$CHECK_RESPONSE" | jq '.size') -gt 0 ]]; then
     TITLE="$BASE_TITLE | $OPENROUTER_MODEL ($COUNTER)"
     echo "Title already exists. Trying '$TITLE'..."
@@ -104,11 +106,11 @@ while true; do
   fi
 done
 
+# Convert result to HTML and write to new Confluence page
 BODY_HTML=$(echo "$CONTENT" | pandoc --from=markdown --to=html --wrap=none)
 
 echo "Creating new Confluence wiki page: $TITLE"
 
-# Call Confluence API
 CONFLUENCE_PAYLOAD=$(jq -n \
   --arg title "$TITLE" \
   --arg space_key "$CONFLUENCE_SPACE_KEY" \
