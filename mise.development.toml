@@ -1,4 +1,4 @@
 [[env._.file]]
-  # NOTE: sops doesn't yet support decrypting with PQ-safe age identities, cf. https://github.com/getsops/sops/issues/2039
-  path = "secrets.env"
+  # NOTE: rage (used by rops which in turn is used by mise) doesn't yet support decrypting with PQ-safe age identities, cf. https://github.com/str4d/rage/issues/598
+  path = "secrets.env.yaml"
   redact = true

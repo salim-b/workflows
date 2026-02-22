@@ -16,4 +16,4 @@ Thumbs.db
 node_modules
 
 # sensitive stuff
-secrets.env
+secrets.env.yaml
