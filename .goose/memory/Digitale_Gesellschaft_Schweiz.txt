@@ -1,0 +1,22 @@
+# Digitale Gesellschaft Schweiz Netzpolitik
+Die Digitale Gesellschaft Schweiz ist ein gemeinnütziger Verein, der sich seit 2011 für Bürger- und Konsumentenschutz im digitalen Zeitalter einsetzt.
+
+**Selbstverständnis und Zweck:**
+Die Organisation versteht sich als zivilgesellschaftliche Kraft, die für eine nachhaltige, demokratische und freie Öffentlichkeit kämpft. Sie verteidigt die Grundrechte in einer digital vernetzten Welt und orientiert sich dabei an den allgemeinen Menschenrechten, was in einer eigenen «Charta für digitale Grundrechte» festgehalten ist.
+
+**Aufgaben und Tätigkeiten:**
+- **Rechtlicher Einsatz:** Die Organisation führt strategische Klagen, beispielsweise gegen die anlasslose Vorratsdatenspeicherung und die Kabelaufklärung (Massenüberwachung) durch den Nachrichtendienst des Bundes (NDB).
+- **Dienste und Tools:** Sie bietet praktische Hilfsmittel an, wie einen Generator für Datenauskunftsbegehren, öffentliche DNS-Resolver und betreibt Tor-Exit-Nodes.
+- **Veranstaltungen:** Zu den bekanntesten Aktivitäten gehören der jährliche "Winterkongress", der "Netzpolitische Abend" in Zürich und Bern sowie das "Datenschutz-Festival".
+- **Beratung und Information:** Sie publiziert Ratgeber (z. B. zur digitalen Selbstverteidigung) und produziert den "Netzpodcast".
+
+**Personen:**
+- **Geschäftsleitung:** Erik Schönenberger (Mitgründer, Informatiker) und Rahel Estermann (Soziologin, seit Sept 2025).
+- **Vorstand:** Präsidiert von Patrick Stählin. Weitere Mitglieder sind unter anderem Marcel Waldvogel (Vizepräsident) und Viktor Györffy.
+- **Netzwerk:** Es besteht ein breites Netzwerk an Fachleuten aus Informatik, Recht und Politik (z. B. Nationalräte wie Balthasar Glättli (Grüne) oder Jörg Mäder (GLP)).
+
+**Geschichte:**
+Der Verein wurde 2011 gegründet. In den letzten 15 Jahren ist er stetig gewachsen und zählt mittlerweile über 1'300 Mitglieder und 130 aktiv Engagierte.
+
+**Politische Ausrichtung:**
+Die Digitale Gesellschaft ist politisch unabhängig, aber klar grundrechtsorientiert. Sie steht kritisch gegenüber staatlicher Überwachung und dem sogenannten Überwachungskapitalismus. Es gibt personelle Überschneidungen zu progressiven Parteien wie den Grünen und den Grünliberalen (GLP), doch der Fokus bleibt auf der netzpolitischen Sacharbeit.
