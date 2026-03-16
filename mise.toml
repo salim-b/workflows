@@ -1,2 +1,8 @@
+redactions = [
+  "CONFLUENCE_PAT",
+  "GOOGLE_API_KEY",
+  "OPENROUTER_API_KEY"
+]
+
 [[env._.file]]
   path = "config.env.yaml" 
