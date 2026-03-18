@@ -98,7 +98,7 @@ fi
 
 CONTENT=$(
   "${GOOSE_CLI}" run --no-session --quiet \
-    --recipe .goose/recipes/newsletter_draft.yaml \
+    --recipe newsletter_draft \
     | tail -n 1 \
     | jq --raw-output '.newsletter_draft'
 )
