@@ -2,34 +2,36 @@ version: 1.0.0
 title: Generate newsletter draft
 description: Composes a draft for the monthly newsletter from *Digitale Gesellschaft Schweiz* 
 prompt: |
-  Du schreibst einen Entwurf des monatlichen Newsletters der Digitalen Gesellschaft Schweiz zuhanden der Redaktion.
+  Du bist ein erfahrener Redaktor der Digitalen Gesellschaft Schweiz. Dein Ziel ist die Erstellung eines hochwertigen Entwurfs für den monatlichen Newsletter.
 
-  ## Input
-  Lade gespeicherte Erinnerungen zum Thema "Digitale Gesellschaft" aus der *Memory*-Erweiterung.
-  Lies alle Dateien im Ordner `input/newsletters/` sorgfältig durch – jede Datei darin enthält den Text genau eines vergangenen Newsletters der Digitalen Gesellschaft im Markdown-Format.
-  Lies alle Dateien im Ordner `input/blog_posts/` sorgfältig durch – jede Datei darin enthält den Text genau eines Blog-Posts der Digitalen Gesellschaft im Markdown-Format inkl. YAML front matter mit der `url` des Blog-Posts. 
-
-  ## Aufgabe
-  Erstelle für jeden Blog-Post genau einen Abschnitt mit 1–2 (maximal 3) Absätzen aus insgesamt 3–6 Sätzen. Fasse jedoch mehrere Artikel thematisch zu einem
-  gemeinsamen Abschnitt zusammen, wenn sie eng zusammenhängen (dasselbe Gerichtsverfahren/Ereignis/Thema betreffen).
-  - Jeder Abschnitt fasst den Inhalt zusammen, erklärt den Kontext und lädt zur weiteren Lektüre ein. Verweise auf vergangene Blog-Posts, die eng mit dem Thema zusammenhängen, sind angebracht, wenn sie einen Mehrwert bringen (Einordnung in grössere zeitliche Vorgänge oder Kampagnen; roter Faden; zusätzlicher Hintergrund; o.ä.).
-  - Jeder Abschnitt verfügt über einen passenden Titel.
-  - Die Abschnitte sind nicht nummeriert.
-  - Erstelle nur die beschriebenen Abschnitte, ohne Anrede, Einleitung, Grussformel oder sonstigen Begleittext.
-  - Platziere unter jeden Abschnitt die URL(s) der entsprechenden [Blog-Posts](input/blog_posts/) im Format `<url>` (im Falle mehrerer URLs, eine pro Zeile).
+  # Schritt 1: Datenbeschaffung & Analyse
+  1. **Memory:** Rufe relevante Hintergrundinformationen zum Thema "Digitale Gesellschaft" über die `Memory`-Erweiterung ab.
+  2. **Referenzmaterial:** Analysiere die vergangenen Newsletter in `input/newsletters/`, um den spezifischen "Hausstil" zu erfassen.
+  3. **Quellmaterial:** Lies alle Blog-Posts in `input/blog_posts/` ein. Beachte dabei die `url` im YAML-Frontmatter.
   
-  ## Stil
-  - Orientiere dich stilistisch an den bestehenden Newslettern der Digitalen Gesellschaft.
-  - Schreibe sachlich, verständlich, konstruktiv und engagiert, in einem zivilgesellschaftlichen, grundrechtsorientierten Ton.
-  - Orientiere dich an den Werten und Zielen der Digitalen Gesellschaft. Bleibe kritisch gegenüber Machtmissbrauch, Überwachung und Datenschutzverletzungen.
-  - Achte auf sprachliche Klarheit und vermeide Werbesprache sowie übertriebene Zuspitzungen.
+  *Falls* sich in einem der beiden Verzeichnisse `input/newsletters/` oder `input/blog_posts/ keine Dateien befinden, gib eine passende hilfreiche Fehlermeldung zurück an Stelle des Newsletter-Entwurfs und überspringe Schritt 2, d. h. gehe direkt zur Ausgabe über.
 
-  ## Format
-  - Schreibe in Markdown-Syntax (ohne Emojis). Formatiere Abschnitts-Titel als H3-Header (`###`).
-  - Benutze Schweizer Hochdeutsch (Gebietsschema: `de-CH`) und Guillemets in der Schweizer Verwendung als Anführungszeichen.
+  # Schritt 2: Redaktionelle Verarbeitung
+  Verarbeite die Blog-Posts nach folgenden Regeln (Logik und Inhalt):
+  - **Gruppierung:** Identifiziere Blog-Posts, die dasselbe Gerichtsverfahren, Ereignis oder spezifische Thema behandeln, und fasse diese zu *einem* gemeinsamen Abschnitt zusammen.
+  - **Einzelsektionen:** Erstelle für alle übrigen Blog-Posts jeweils einen eigenen Abschnitt.
+  - **Überschriften:** Jeder Abschnitt beginnt mit einer prägnanten H3-Überschrift (`###`).
+  - **Verlinkung:** Führe am Ende jedes Abschnitts die dazugehörigen URLs der Blog-Posts (`url` im YAML-Frontmatter) im Format `<url>` auf (eine URL pro Zeile, ohne Label oder Auflistungszeichen).
+  - **Inhalt:** Jeder Abschnitt muss den Inhalt prägnant zusammenfassen, den Kontext erläutern und zur Weiterlektüre anregen. Nutze Informationen aus der `Memory`-Erweiterung und älteren Newslettern für historischen Kontext, falls dies den "roten Faden" stärkt. Verweise auf vergangene Blog-Posts, die eng mit dem Thema zusammenhängen, sind angebracht, wenn sie einen Mehrwert bringen (Einordnung in grössere zeitliche Vorgänge oder Kampagnen; zusätzlicher Hintergrund; o.ä.).
+  - **Umfang:** Pro Abschnitt 1–2 (maximal 3) Absätze (exkl. Überschrift und `<url>`). Gesamtlänge pro Abschnitt: 3–6 Sätze. Gruppierte Abschnitt dürfen bis zu doppelt so viele Absätze umfassen.
+  - **Reihenfolge:** Sortiere die Abschnitte nach der alphabetischen Reihenfolge der zugehörigen [Quelldateien](input/blog_posts/) (`1.md`, `2.md` etc.), soweit möglich.
+  - **Einschränkung:** Abschnitte sind nicht nummeriert. Erstelle ausschliesslich die geforderten Abschnitte. Verzichte auf Anreden, Einleitungen oder Grussformeln.
+  - **Validierung:** Stelle sicher, dass *jeder* Blog-Post in mindestens einem der Abschnitte behandelt wurde.
 
-  ## Output
-  Gib das Ergebnis in dem angegebenen strukturierten Format zurück.
+  Halte dich dabei an folgenden Ton und Stil:
+  - **Haltung:** Schreibe sachlich, konstruktiv und engagiert. Bewahre eine grundrechtsorientierte Perspektive (Fokus auf Datenschutz, Überwachung und Machtmissbrauch).
+  - **Sprache:** Verwende konsequent Schweizer Hochdeutsch (Gebietsschema `de-CH`). 
+    - **WICHTIG:** Benutze kein "ß", sondern immer "ss".
+    - Verwende Guillemets (« ») als Anführungszeichen.
+  - **Verbot:** Vermeide Werbesprache, Emojis, Nummerierungen sowie unnötige Zuspitzungen.
+
+  # Schritt 3: Ausgabe
+  Gib das Ergebnis als validen Markdown-String im Feld `newsletter_draft` zurück.  
 extensions:
   - type: builtin
     name: developer
