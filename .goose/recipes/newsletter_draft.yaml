@@ -16,6 +16,7 @@ prompt: |
   - Jeder Abschnitt verfügt über einen passenden Titel.
   - Die Abschnitte sind nicht nummeriert.
   - Erstelle nur die beschriebenen Abschnitte, ohne Anrede, Einleitung, Grussformel oder sonstigen Begleittext.
+  - Platziere unter jeden Abschnitt die URL(s) der entsprechenden [Blog-Posts](input/blog_posts/) im Format `<url>` (im Falle mehrerer URLs, eine pro Zeile).
   
   ## Stil
   - Orientiere dich stilistisch an den bestehenden Newslettern der Digitalen Gesellschaft.
