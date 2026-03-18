@@ -1,0 +1,56 @@
+version: 1.0.0
+title: Generate newsletter draft
+description: Composes a draft for the monthly newsletter from *Digitale Gesellschaft Schweiz* 
+prompt: |
+  Du schreibst einen Entwurf des monatlichen Newsletters der Digitalen Gesellschaft Schweiz zuhanden der Redaktion.
+
+  ## Input
+  Lade gespeicherte Erinnerungen zum Thema "Digitale Gesellschaft" aus der *Memory*-Erweiterung.
+  Lies alle Dateien im Ordner `input/newsletters/` sorgfältig durch – jede Datei darin enthält den Text genau eines vergangenen Newsletters der Digitalen Gesellschaft im Markdown-Format.
+  Lies alle Dateien im Ordner `input/blog_posts/` sorgfältig durch – jede Datei darin enthält den Text genau eines Blog-Posts der Digitalen Gesellschaft im Markdown-Format inkl. YAML front matter mit der `url` des Blog-Posts. 
+
+  ## Aufgabe
+  Erstelle für jeden Blog-Post genau einen Abschnitt mit 1–2 (maximal 3) Absätzen aus insgesamt 3–6 Sätzen. Fasse jedoch mehrere Artikel thematisch zu einem
+  gemeinsamen Abschnitt zusammen, wenn sie eng zusammenhängen (dasselbe Gerichtsverfahren/Ereignis/Thema betreffen).
+  - Jeder Abschnitt fasst den Inhalt zusammen, erklärt den Kontext und lädt zur weiteren Lektüre ein. Verweise auf vergangene Blog-Posts, die eng mit dem Thema zusammenhängen, sind angebracht, wenn sie einen Mehrwert bringen (Einordnung in grössere zeitliche Vorgänge oder Kampagnen; roter Faden; zusätzlicher Hintergrund; o.ä.).
+  - Jeder Abschnitt verfügt über einen passenden Titel.
+  - Die Abschnitte sind nicht nummeriert.
+  - Erstelle nur die beschriebenen Abschnitte, ohne Anrede, Einleitung, Grussformel oder sonstigen Begleittext.
+  
+  ## Stil
+  - Orientiere dich stilistisch an den bestehenden Newslettern der Digitalen Gesellschaft.
+  - Schreibe sachlich, verständlich, konstruktiv und engagiert, in einem zivilgesellschaftlichen, grundrechtsorientierten Ton.
+  - Orientiere dich an den Werten und Zielen der Digitalen Gesellschaft. Bleibe kritisch gegenüber Machtmissbrauch, Überwachung und Datenschutzverletzungen.
+  - Achte auf sprachliche Klarheit und vermeide Werbesprache sowie übertriebene Zuspitzungen.
+
+  ## Format
+  - Schreibe in Markdown-Syntax (ohne Emojis). Formatiere Abschnitts-Titel als H3-Header (`###`).
+  - Benutze Schweizer Hochdeutsch (Gebietsschema: `de-CH`) und Guillemets in der Schweizer Verwendung als Anführungszeichen.
+
+  ## Output
+  Gib das Ergebnis in dem angegebenen strukturierten Format zurück.
+extensions:
+  - type: builtin
+    name: developer
+    display_name: Developer
+    timeout: 300
+    bundled: true
+  - type: builtin
+    name: memory
+    display_name: Memory
+    timeout: 300
+    bundled: true
+response:
+  json_schema:
+    type: object
+    properties:
+      newsletter_draft:
+        type: string
+        minLength: 1
+        description: "Markdown-formatted draft text for the monthly newsletter from *Digitale Gesellschaft Schweiz*"
+    required:
+      - newsletter_draft
+settings:
+  goose_provider: google
+  goose_model: gemini-3.1-pro-preview
+  max_turns: 50

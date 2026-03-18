@@ -17,3 +17,6 @@ node_modules
 
 # sensitive stuff
 secrets.env.yaml
+
+# dynamic input (always freshly fetched)
+/input

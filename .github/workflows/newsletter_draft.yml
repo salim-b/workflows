@@ -53,8 +53,6 @@ jobs:
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         env:
           CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_MODEL: ${{ inputs.OPENROUTER_MODEL || env.OPENROUTER_MODEL }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
-          chmod +x scripts/newsletter_draft.sh
-          ./scripts/newsletter_draft.sh
+          mise run newsletter_draft
