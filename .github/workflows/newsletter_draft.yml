@@ -31,7 +31,7 @@ jobs:
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         env:
           MISE_ENV: github
-        uses: jdx/mise-action@v3
+        uses: jdx/mise-action@v4
 
       - name: Set up Pandoc
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
