@@ -6,3 +6,6 @@ redactions = [
 
 [[env._.file]]
   path = "config.env.yaml" 
+
+[tools]
+  "github:block/goose" = "latest"
