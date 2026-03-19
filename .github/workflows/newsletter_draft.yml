@@ -6,12 +6,6 @@ on:
     # We will filter for the second Wednesday in the job steps
     - cron: '0 0 * * 3'
   workflow_dispatch:
-    inputs:
-      OPENROUTER_MODEL:
-        description: 'OpenRouter model identifier'
-        required: false
-        default: 'z-ai/glm-4.5-air:free'
-        type: string
 
 jobs:
   gen-newsletter-draft:
