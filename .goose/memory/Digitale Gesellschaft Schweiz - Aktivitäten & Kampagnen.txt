@@ -1,0 +1,6 @@
+# Digitale Gesellschaft Schweiz Kampagnen Recht Infrastruktur
+- Petitionen (z.B. gegen betrügerische Werbung)
+- Vernehmlassungen zu Gesetzen (BÜPF, NDG, ISG)
+- Gerichtliche Beschwerden (bis zum EGMR bei Vorratsdatenspeicherung)
+- Infrastruktur-Betrieb (Tor Exit Nodes, DNS-Resolver mit DoT/DoH).
+- Netzpodcast (NP) als regelmässiges Informationsmedium.
