@@ -12,4 +12,4 @@ The workflow is defined in [`.github/workflows/newsletter_draft.yml`](.github/wo
 
 ### Configuration
 
- Edit the Goose recipes in `.goose/recipes/` and the environment variables in [`config.env`](config.env) to customize the task execution. Note that the script automatically determines suitable `ARTICLE_LINKS` and `NEWSLETTER_LINKS` if none are provided.
+ Edit the Goose recipe [`.goose/recipes/newsletter_draft.yaml`](.goose/recipes/newsletter_draft.yaml) and the environment variables in [`config.env`](config.env) to customize the task execution. Note that the script automatically determines suitable `ARTICLE_LINKS` and `NEWSLETTER_LINKS` if none are provided.
