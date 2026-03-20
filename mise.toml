@@ -7,5 +7,8 @@ redactions = [
 [[env._.file]]
   path = "config.env.yaml" 
 
+[settings]
+  task.timings = true
+
 [tools]
   "github:block/goose" = "latest"
