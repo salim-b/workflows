@@ -2,10 +2,12 @@
 #MISE description="Generate newsletter draft and write it to Confluence"
 #USAGE flag "--article-links <urls>" {
 #USAGE   env "ARTICLE_LINKS"
+#USAGE   default ""
 #USAGE   help "URLs to the blog articles to be covered by the newsletter, separated by space, tab or newline"
 #USAGE }
 #USAGE flag "--newsletter-links <urls>" {
 #USAGE   env "NEWSLETTER_LINKS"
+#USAGE   default ""
 #USAGE   help "URLs to past newsletters that shall serve as examples, separated by space, tab or newline"
 #USAGE }
 #USAGE flag "--confluence-space-key <id>" {
@@ -48,7 +50,7 @@ ARTICLE_LINKS="${usage_article_links:-$(
     xargs -n1
 )}"
 ## NOTE: `read -d ''` returns exit 1 since it never reaches the expected NUL byte, thus we need to short-circuit
-IFS=$' \t\n' read -r -d '' -a article_urls <<< "$ARTICLE_LINKS" || [[ ${#article_urls[@]} -gt 0 ]]
+IFS=$' \t\n' read -r -d '' -a article_urls <<< "$ARTICLE_LINKS" || true
 
 NEWSLETTER_LINKS="${usage_newsletter_links:-$(
   curl -s -L -A "Mozilla/5.0" https://www.digitale-gesellschaft.ch/feed/?tag=newsletter | \
@@ -57,31 +59,31 @@ NEWSLETTER_LINKS="${usage_newsletter_links:-$(
     xargs -n1
 )}"
 ## NOTE: `read -d ''` returns exit 1 since it never reaches the expected NUL byte, thus we need to short-circuit
-IFS=$' \t\n' read -r -d '' -a newsletter_urls <<< "$NEWSLETTER_LINKS" || [[ ${#newsletter_urls[@]} -gt 0 ]]
+IFS=$' \t\n' read -r -d '' -a newsletter_urls <<< "$NEWSLETTER_LINKS" || true
 
 # Fetch content from all links and save as Markdown
-  rm -rf input && mkdir --parents input/newsletters/ input/blog_posts/
-  for i in "${!article_urls[@]}"; do
-    URL="${article_urls[$i]}"
-    FILE_PATH="input/blog_posts/$((i+1)).md"
-    spider --url="$URL" --depth=1 --budget='*,1' --headless --wait-for-idle-dom=body scrape --output-html \
-      | jq --raw-output '.html' \
-      | htmd --ignored-tags="head,script,style,header" --heading-style=setex \
-      > "${FILE_PATH}" \
-      && sed --in-place '/^### Newsletter$/,$d' "${FILE_PATH}" \
-      && sed --in-place "1i ---\nurl: ${URL}/\n---\n"
-    # alternative: html-to-markdown --preprocess --preset=aggressive --with-metadata --extract-document --extract-structured-data | yq '.markdown'
-  done
-  for i in "${!newsletter_urls[@]}"; do
-    URL="${newsletter_urls[$i]}"
-    FILE_PATH="input/newsletters/$((i+1)).md"
-    spider --url="$URL" --depth=1 --budget='*,1' --headless --wait-for-idle-dom=body scrape --output-html \
-      | jq --raw-output '.html' \
-      | htmd --ignored-tags="head,script,style,header" --heading-style=setex \
-      > "${FILE_PATH}" \
-      && sed --in-place '/^### Newsletter$/,$d' "${FILE_PATH}" \
-      && sed --in-place "1i ---\nurl: ${URL}/\n---\n"
-  done
+rm -rf input && mkdir --parents input/newsletters/ input/blog_posts/
+for i in "${!article_urls[@]}"; do
+  URL="${article_urls[$i]}"
+  FILE_PATH="input/blog_posts/$((i+1)).md"
+  spider --url="$URL" --depth=1 --budget='*,1' --headless --wait-for-idle-dom=body scrape --output-html \
+    | jq --raw-output '.html' \
+    | htmd --ignored-tags="head,script,style,header" --heading-style=setex \
+    > "${FILE_PATH}" \
+    && sed --in-place '/^### Newsletter$/,$d' "${FILE_PATH}" \
+    && sed --in-place "1i ---\nurl: ${URL}/\n---\n"
+  # alternative: html-to-markdown --preprocess --preset=aggressive --with-metadata --extract-document --extract-structured-data | yq '.markdown'
+done
+for i in "${!newsletter_urls[@]}"; do
+  URL="${newsletter_urls[$i]}"
+  FILE_PATH="input/newsletters/$((i+1)).md"
+  spider --url="$URL" --depth=1 --budget='*,1' --headless --wait-for-idle-dom=body scrape --output-html \
+    | jq --raw-output '.html' \
+    | htmd --ignored-tags="head,script,style,header" --heading-style=setex \
+    > "${FILE_PATH}" \
+    && sed --in-place '/^### Newsletter$/,$d' "${FILE_PATH}" \
+    && sed --in-place "1i ---\nurl: ${URL}/\n---\n"
+done
 
 # Run Goose recipe
 ## inside Distrobox, use host's Goose executable
