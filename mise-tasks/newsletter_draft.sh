@@ -60,7 +60,6 @@ NEWSLETTER_LINKS="${usage_newsletter_links:-$(
 IFS=$' \t\n' read -r -d '' -a newsletter_urls <<< "$NEWSLETTER_LINKS" || [[ ${#newsletter_urls[@]} -gt 0 ]]
 
 # Fetch content from all links and save as Markdown
-if (command -v chromium >/dev/null || command -v google-chrome >/dev/null); then
   rm -rf input && mkdir --parents input/newsletters/ input/blog_posts/
   for i in "${!article_urls[@]}"; do
     URL="${article_urls[$i]}"
@@ -83,10 +82,6 @@ if (command -v chromium >/dev/null || command -v google-chrome >/dev/null); then
       && sed --in-place '/^### Newsletter$/,$d' "${FILE_PATH}" \
       && sed --in-place "1i ---\nurl: ${URL}/\n---\n"
   done
-else
-  echo "No Chromium browser detected."
-  exit 1
-fi
 
 # Run Goose recipe
 ## inside Distrobox, use host's Goose executable
