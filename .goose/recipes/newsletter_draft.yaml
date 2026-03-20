@@ -7,8 +7,8 @@ prompt: |
   ### 1. Datenbeschaffung & Kontext
   - **Memory:** Nutze die `Memory`-Erweiterung, um Hintergrundwissen zur Digitalen Gesellschaft Schweiz abzurufen.
   - **Referenzmaterial:** Analysiere die bisherigen Newsletter unter `input/newsletters/`, um den "Hausstil" (Sprachebene, Tiefe, Struktur) zu erfassen.
-  - **Quellen:** Verarbeite *alle* Blog-Posts in `input/blog_posts/`. Beachte dabei die `url` im YAML-Frontmatter.
-  - **Abbruchbedingung:** Sollten die Verzeichnisse `input/newsletters/` oder `input/blog_posts/` leer sein, erstelle keinen Entwurf, sondern gib eine hilfreiche Fehlermeldung zurück.
+  - **Quellen:** Verarbeite *alle* Blog-Posts in `input/articles/`. Beachte dabei die `url` im YAML-Frontmatter.
+  - **Abbruchbedingung:** Sollten die Verzeichnisse `input/newsletters/` oder `input/articles/` leer sein, erstelle keinen Entwurf, sondern gib eine hilfreiche Fehlermeldung zurück.
 
   ### 2. Redaktionelle Verarbeitung (Logik & Struktur)
   Erstelle den Inhalt nach folgenden Regeln:
