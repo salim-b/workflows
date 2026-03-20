@@ -33,11 +33,11 @@
 set -euo pipefail
 
 if [[ "${usage_skip_fetch:-}" != "true" ]]; then
-  if [[ -z "${usage_newsletter_links:-}" ]] ; then
-    mise run fetch:latest-newsletters
-  else
-    OUTPUT_DIR=input/newsletters mise run fetch:pages "${usage_newsletter_links:?}"
-  fi
+  # if [[ -z "${usage_newsletter_links:-}" ]] ; then
+  #   mise run fetch:latest-newsletters
+  # else
+  #   OUTPUT_DIR=input/newsletters mise run fetch:pages "${usage_newsletter_links:?}"
+  # fi
 
   if [[ -z "${usage_article_links:-}" ]] ; then
     mise run fetch:latest-articles

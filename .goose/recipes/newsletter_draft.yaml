@@ -6,24 +6,30 @@ prompt: |
 
   ### 1. Datenbeschaffung & Kontext
   - **Memory:** Nutze die `Memory`-Erweiterung, um Hintergrundwissen zur Digitalen Gesellschaft Schweiz abzurufen.
-  - **Referenzmaterial:** Analysiere die bisherigen Newsletter unter `input/newsletters/`, um den "Hausstil" (Sprachebene, Tiefe, Struktur) zu erfassen.
   - **Quellen:** Verarbeite *alle* Blog-Posts in `input/articles/`. Beachte dabei die `url` im YAML-Frontmatter.
-  - **Abbruchbedingung:** Sollten die Verzeichnisse `input/newsletters/` oder `input/articles/` leer sein, erstelle keinen Entwurf, sondern gib eine hilfreiche Fehlermeldung zurück.
+  - **Abbruchbedingung:** Sollte das Verzeichnis `input/articles/` leer sein, erstelle keinen Entwurf, sondern gib eine hilfreiche Fehlermeldung zurück.
 
   ### 2. Redaktionelle Verarbeitung (Logik & Struktur)
-  Erstelle den Inhalt nach folgenden Regeln:
-  - **Thematische Gruppierung:** Identifiziere Blog-Posts, die dasselbe Thema, Ereignis oder Gerichtsverfahren behandeln, und fasse diese zu *einem* gemeinsamen Abschnitt zusammen.
-  - **Einzelabschnitte:** Erstelle für alle übrigen Blog-Posts jeweils einen eigenen Abschnitt.
-  - **Reihenfolge:** Sortiere die Abschnitte primär nach der alphabetischen/numerischen Reihenfolge der Quelldateien (z. B. `1.md`, `2.md`).
+  Erstelle den Inhalt strikt nach folgenden Regeln:
+  - **Abschnitte:**
+    - Erstelle für jeden Blog-Post genau einen Abschnitt. Fasse jedoch mehrere Artikel thematisch zu einem gemeinsamen Abschnitt zusammen, wenn sie eng zusammenhängen (dasselbe Thema/Ereignis/Gerichtsverfahren betreffen). Erstelle für "Netzpodcast"-Blog-Posts nie einen separaten Abschnitt, sondern verweise in anderen Abschnitten auf den Netzpodcast, falls relevant.
   - **Aufbau pro Abschnitt:**
     - **Überschrift:** Beginne mit einer prägnanten H3-Überschrift (`###`)
-    - **Inhalt:** Fasse den Kern prägnant zusammen, erläutere den Kontext und schlage die Brücke zu grösseren Entwicklungen und historischem Kontext, sofern relevant. Nutze dazu Wissen aus dem `Memory` und die Analyse der [bisherigen Newsletter](`input/newsletters/`). Verweise auf vergangene Blog-Posts, die eng mit dem Thema zusammenhängen, sind angebracht, wenn sie der Leser:in einen Mehrwert bringen.
-    - **Umfang:** Pro Abschnitt 1–2 (maximal 3) Absätze aus insgesamt 3–6 Sätzen. Gruppierte Abschnitte dürfen bis zu doppelt so lange sein.
-    - **Verlinkung:** Liste am Ende jedes Abschnitts die dazugehörigen URLs (`url` vom YAML-Frontmatter) im Format `<url>` auf (eine pro Zeile, ohne Aufzählungszeichen).
+    - **Inhalt:** Fasse den Kern prägnant zusammen, erläutere den Kontext und schlage die Brücke zu grösseren Entwicklungen und historischem Kontext, sofern relevant. Nutze dazu Wissen aus dem `Memory`.
+    - **Umfang:** 1–2 (maximal 3) kurze Absätze aus insgesamt 3–6 Sätzen. Gemeinsame Abschnitte dürfen bis zu doppelt so lange sein.
+    - **Verlinkung:**
+      - Führe am Ende jedes Abschnitts die URL(s) der jeweiligen Blog-Posts (`url` vom YAML-Frontmatter) im Format `<url>` auf (eine pro Zeile, ohne Aufzählungszeichen).
+      - Verlinke zudem auf jede dieser URLs inline je an einer passenden Stelle im Abschnitt.
 
   ### 3. Stil & Sprache (de-CH Fokus)
   Halte dich strikt an diese Vorgaben:
-  - **Tonalität:** Sachlich, konstruktiv und engagiert. Bewahre eine grundrechtsorientierte Perspektive (Fokus auf Datenschutz, Überwachung und Machtmissbrauch).
+  - **Tonalität:**
+    - Sachlich-informativ, konstruktiv, fundiert und engagiert.
+    - Bewahre eine grundrechtsorientierte Perspektive (Fokus auf Datenschutz, Überwachung und Machtmissbrauch).
+    - Fachbegriffe kurz erläutern.
+    - Direkte Ansprache ('Du', 'Werde Mitglied') bei Calls-to-Action.
+    - Gender-neutrale Sprache (z. B. 'Teilnehmende', 'Autor:innen' oder Mischform).
+  - **Tiefe**: Fokus auf Zusammenfassung, Details werden konsequent verlinkt.
   - **Sprachstandard:** Verwende konsequent Schweizer Hochdeutsch (Gebietsschema `de-CH`).
     - **WICHTIG:** Benutze niemals ein "ß", sondern immer "ss".
     - **Anführungszeichen:** Verwende ausschliesslich Guillemets (« »).
