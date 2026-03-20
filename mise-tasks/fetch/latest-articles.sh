@@ -25,6 +25,6 @@ ARTICLE_LINKS="$(
 if [[ -n "$ARTICLE_LINKS" ]]; then
   exec env OUTPUT_DIR=input/articles mise run fetch:pages "${ARTICLE_LINKS}"
 else
-  echo "No blog articles published since last newsletter."
+  echo "No blog articles published since last newsletter." >&2
   exit 1
 fi

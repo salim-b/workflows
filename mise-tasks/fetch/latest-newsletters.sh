@@ -12,6 +12,6 @@ NEWSLETTER_LINKS="$(
 if [[ -n "$NEWSLETTER_LINKS" ]]; then
   exec env OUTPUT_DIR=input/newsletters mise run fetch:pages "${NEWSLETTER_LINKS}"
 else
-  exec env echo "No newsletter links found. This likely means this task needs debugging."
+  echo "No newsletter links found. This likely means this task needs debugging." >&2
   exit 1
 fi
