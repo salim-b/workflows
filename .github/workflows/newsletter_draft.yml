@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       ARTICLE_LINKS:
-        description: 'URLs of the blog articles to be covered by the newsletter, separated by space, tab or newline'
+        description: 'URLs of the blog articles to be covered by the newsletter, separated by a space character'
         required: false
         type: string
 
