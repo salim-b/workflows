@@ -6,6 +6,11 @@ on:
     # We will filter for the second Wednesday in the job steps
     - cron: '0 0 * * 3'
   workflow_dispatch:
+    inputs:
+      ARTICLE_LINKS:
+        description: 'URLs of the blog articles to be covered by the newsletter, separated by space, tab or newline'
+        required: false
+        type: string
 
 jobs:
   gen-newsletter-draft:
@@ -46,6 +51,7 @@ jobs:
       - name: Generate newsletter draft and write it to Confluence
         if: env.is_that_day == 'true' || github.event_name == 'workflow_dispatch'
         env:
+          ARTICLE_LINKS: ${{ inputs.ARTICLE_LINKS || env.ARTICLE_LINKS }}
           CONFLUENCE_PAT: ${{ secrets.CONFLUENCE_PAT }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
