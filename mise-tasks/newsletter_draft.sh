@@ -9,10 +9,6 @@
 #USAGE   env "ARTICLE_LINKS"
 #USAGE   help "URLs of the blog articles to be covered by the newsletter, separated by space, tab or newline"
 #USAGE }
-#NOUSAGE flag "--newsletter-links <urls>" {
-#NOUSAGE   env "NEWSLETTER_LINKS"
-#NOUSAGE   help "URLs of past newsletters that shall serve as examples, separated by space, tab or newline"
-#NOUSAGE }
 #USAGE flag "--confluence-space-key <id>" {
 #USAGE   env "CONFLUENCE_SPACE_KEY"
 #USAGE   help "Key identifying the space in the Confluence wiki to place the new page in"
@@ -29,6 +25,10 @@
 #USAGE   env "CONFLUENCE_PAT"
 #USAGE   help "Personal Access Token (PAT) to authenticate with the Confluence host"
 #USAGE }
+#NOUSAGE flag "--newsletter-links <urls>" {
+#NOUSAGE   env "NEWSLETTER_LINKS"
+#NOUSAGE   help "URLs of past newsletters that shall serve as examples, separated by space, tab or newline"
+#NOUSAGE }
 
 set -euo pipefail
 
