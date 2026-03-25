@@ -1,11 +1,8 @@
 # TODOs
 
-## newsletter_draft
+- investigate how to leverage spider's native parallelization capabilities via its CLI 
 
-- use hand-curated set of newsletters as example input for style (latest 10 is silly)
-- inline link to full blog post 
-
-### to discuss
+## to be discussed
 
 - raw links at the end needed?
 - order of items (currently chronologically)
