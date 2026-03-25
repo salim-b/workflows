@@ -3,16 +3,16 @@
 #USAGE flag "--skip-fetch" {
 #USAGE   default #false
 #USAGE   env "SKIP_FETCH"
-#USAGE   help "Whether to skip fetching article and newsletter links (i.e. ignore the `--article-links` and `--newsletter-links` flags) and rely on pre-existing `input/`"
+#USAGE   help "Whether to skip fetching article links (i.e. ignore the `--article-links` flag) and rely on pre-existing `input/articles/*.md` files"
 #USAGE }
 #USAGE flag "--article-links <urls>" {
 #USAGE   env "ARTICLE_LINKS"
 #USAGE   help "URLs of the blog articles to be covered by the newsletter, separated by space, tab or newline"
 #USAGE }
-#USAGE flag "--newsletter-links <urls>" {
-#USAGE   env "NEWSLETTER_LINKS"
-#USAGE   help "URLs of past newsletters that shall serve as examples, separated by space, tab or newline"
-#USAGE }
+#NOUSAGE flag "--newsletter-links <urls>" {
+#NOUSAGE   env "NEWSLETTER_LINKS"
+#NOUSAGE   help "URLs of past newsletters that shall serve as examples, separated by space, tab or newline"
+#NOUSAGE }
 #USAGE flag "--confluence-space-key <id>" {
 #USAGE   env "CONFLUENCE_SPACE_KEY"
 #USAGE   help "Key identifying the space in the Confluence wiki to place the new page in"
@@ -33,6 +33,8 @@
 set -euo pipefail
 
 if [[ "${usage_skip_fetch:-}" != "true" ]]; then
+
+  # COMMENTED OUT since we extracted our newsletter "house style" into memories to save on input tokens
   # if [[ -z "${usage_newsletter_links:-}" ]] ; then
   #   mise run fetch:latest-newsletters
   # else
@@ -79,7 +81,7 @@ BASE_TITLE="«Update» $DATE"
 TITLE="$BASE_TITLE"
 COUNTER=1
 
-## Add serial nr to title if a page wth the title already exists
+## Add serial nr to title if a page with the title already exists
 echo "Checking if page with title '$TITLE' already exists..."
 while true; do
   CHECK_RESPONSE=$(curl \
