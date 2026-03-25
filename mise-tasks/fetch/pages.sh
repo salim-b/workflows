@@ -14,7 +14,7 @@
 
 set -euo pipefail
 
-## NOTE: `read -d ''` returns exit 1 since it never reaches the expected NUL byte, thus we need to short-circuit
+## NOTE: `read -d ''` returns exit code 1 since it never reaches the expected NUL byte, thus we need to short-circuit
 IFS=$' \t\n' read -r -d '' -a urls <<< "${usage_urls:?}" || true
 
 OUTPUT_DIR="${usage_output_dir:?}"
