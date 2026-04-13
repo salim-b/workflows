@@ -20,7 +20,7 @@ jobs:
         id: check_date
         run: |
           DAY=$(date +%d)
-          if [[ $DAY -ge 8 && $DAY -le 14 ]]; then
+          if [[ 10#$DAY -ge 8 && 10#$DAY -le 14 ]]; then
             echo "is_that_day=true" >> $GITHUB_ENV
           else
             echo "is_that_day=false" >> $GITHUB_ENV
