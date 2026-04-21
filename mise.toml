@@ -8,7 +8,13 @@ redactions = [
   path = "config.env.yaml" 
 
 [settings]
+  experimental = true
   task.timings = true
 
 [tools]
+  jq = "latest"
+  pandoc = "latest"
+  "conda:htmd" = "latest"
+  "conda:spider_cli" = "latest"
+  "conda:xee-rust" = "latest"
   "github:block/goose" = "latest"
