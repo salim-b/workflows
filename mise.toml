@@ -10,6 +10,7 @@ redactions = [
 [settings]
   experimental = true
   task.timings = true
+  verbose = true
 
 [tools]
   jq = "latest"
