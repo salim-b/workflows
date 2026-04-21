@@ -5,7 +5,7 @@ redactions = [
 ]
 
 [[env._.file]]
-  path = "config.env.yaml" 
+  path = "config.env.yaml"
 
 [settings]
   experimental = true
@@ -14,7 +14,7 @@ redactions = [
 [tools]
   jq = "latest"
   pandoc = "latest"
-  "conda:htmd" = "latest"
-  "conda:spider_cli" = "latest"
-  "conda:xee-rust" = "latest"
+  "conda:htmd" = { version = "latest", depends = ["conda:libgcc"] }
+  "conda:spider_cli" = { version = "latest", depends = ["conda:libgomp"] }
+  "conda:xee-rust" = { version = "latest", depends = ["conda:_openmp_mutex"] }
   "github:block/goose" = "latest"
