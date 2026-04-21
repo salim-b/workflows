@@ -68,14 +68,24 @@ CONTENT=$(
 CONFLUENCE_HOST="${usage_confluence_host%/}"
 
 # Prepare Confluence page title
-## Calculate the 3rd Wednesday of the current month (always between the 15th and 21st)
-YEAR_MONTH=$(date +"%Y-%m")
-for d in {15..21}; do
-  if [ "$(date -d "$YEAR_MONTH-$d" +%u)" -eq 3 ]; then
-    DATE="$YEAR_MONTH-$d"
-    break
-  fi
-done
+## Calculate the 3rd Wednesday of a month (always between the 15th and 21st)
+get_3rd_wed() {
+  for d in {15..21}; do
+    if [ "$(date -d "$1-$d" +%u)" -eq 3 ]; then
+      echo "$1-$d"
+      return
+    fi
+  done
+}
+
+TODAY=$(date +"%Y-%m-%d")
+CURRENT_MONTH=$(date +"%Y-%m")
+DATE=$(get_3rd_wed "$CURRENT_MONTH")
+
+if [[ "$DATE" < "$TODAY" ]]; then
+  NEXT_MONTH=$(date -d "$CURRENT_MONTH-15 + 1 month" +"%Y-%m")
+  DATE=$(get_3rd_wed "$NEXT_MONTH")
+fi
 
 BASE_TITLE="«Update» $DATE"
 TITLE="$BASE_TITLE"
