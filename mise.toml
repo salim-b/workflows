@@ -16,6 +16,6 @@ redactions = [
   jq = "latest"
   pandoc = "latest"
   "conda:htmd" = "latest"
-  "conda:spider_cli" = { version = "latest", depends = ["conda:htmd"] }
-  "conda:xee-rust" = { version = "latest", depends = ["conda:spider_cli"] }
+  "conda:spider_cli" = "latest"
+  "conda:xee-rust" = "latest"
   "github:block/goose" = "latest"
