@@ -9,6 +9,7 @@ redactions = [
 
 [settings]
   experimental = true
+  http_retries = 3
   task.timings = true
   verbose = false
 
